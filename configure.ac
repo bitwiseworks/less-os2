@@ -612,7 +612,11 @@ AH_TOP([
 /*
  * Pathname separator character.
  */
-#define	PATHNAME_SEP	"/"
+#ifdef __OS2__
+#define PATHNAME_SEP = "\\";
+#else
+#define PATHNAME_SEP = "/";
+#endif
 
 /*
  * The value returned from tgetent on success.
