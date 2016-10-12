@@ -218,7 +218,15 @@ extern char version[];
 	void
 usage()
 {
-	fprintf(stderr, "usage: lesskey [-o output] [input]\n");
+	fprintf(stderr, "usage: lesskey [-o output] [input]\n\n");
+	fprintf(stderr,
+			"  -o output\t- specify output file, otherwise $HOME/.less is used\n");
+	fprintf(stderr,
+			"  -i input\t- specify input file, otherwise standard input is used\n");
+	fprintf(stderr,
+			"  -V\t\t- print lesskey version\n");
+	fprintf(stderr,
+			"  -h\t\t- print this help\n");
 	exit(1);
 }
 
