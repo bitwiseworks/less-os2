@@ -613,9 +613,9 @@ AH_TOP([
  * Pathname separator character.
  */
 #ifdef __OS2__
-#define PATHNAME_SEP = "\\";
+#define PATHNAME_SEP "\\"
 #else
-#define PATHNAME_SEP = "/";
+#define PATHNAME_SEP "/"
 #endif
 
 /*
