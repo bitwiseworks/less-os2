@@ -1318,7 +1318,7 @@ get_term()
 	t2 = ltgetstr("sr", &sp);
 	if (t2 == NULL)
 		t2 = "";
-#if OS2
+#if OS2 || defined(__OS2__)
 	if (*t1 == '\0' && *t2 == '\0')
 		sc_addline = "";
 	else
