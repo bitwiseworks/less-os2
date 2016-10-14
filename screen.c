@@ -72,6 +72,10 @@ extern int fd0;
 #include <sys/ptem.h>
 #endif
 
+#ifdef __KLIBC__
+#include "pckeys.h"
+#endif
+
 #endif /* MSDOS_COMPILER */
 
 /*
@@ -84,7 +88,7 @@ extern int fd0;
 #define MUST_SET_LINE_DISCIPLINE 0
 #endif
 
-#if OS2
+#if OS2 || defined(__KLIBC__)
 #define	DEFAULT_TERM		"ansi"
 static char *windowid;
 #else
@@ -792,6 +796,9 @@ scrsize()
 #endif
 #endif
 #endif
+#ifdef __KLIBC__
+	windowid = NULL;
+#endif
 
 	if (sys_height > 0)
 		sc_height = sys_height;
@@ -884,7 +891,7 @@ special_key_str(key)
 {
 	static char tbuf[40];
 	char *s;
-#if MSDOS_COMPILER || OS2
+#if MSDOS_COMPILER || OS2 || defined(__KLIBC__)
 	static char k_right[]		= { '\340', PCK_RIGHT, 0 };
 	static char k_left[]		= { '\340', PCK_LEFT, 0  };
 	static char k_ctl_right[]	= { '\340', PCK_CTL_RIGHT, 0  };
@@ -908,7 +915,7 @@ special_key_str(key)
 
 	switch (key)
 	{
-#if OS2
+#if OS2 || defined(__KLIBC__)
 	/*
 	 * If windowid is not NULL, assume less is executed in 
 	 * the XFree86 environment.
@@ -980,7 +987,7 @@ special_key_str(key)
 		s = k_delete;
 		break;
 #endif
-#if MSDOS_COMPILER || OS2
+#if MSDOS_COMPILER || OS2 || defined(__KLIBC__)
 	case SK_INSERT:
 		s = k_insert;
 		break;
@@ -1318,7 +1325,7 @@ get_term()
 	t2 = ltgetstr("sr", &sp);
 	if (t2 == NULL)
 		t2 = "";
-#if OS2 || defined(__OS2__)
+#if OS2 || defined(__KLIBC__)
 	if (*t1 == '\0' && *t2 == '\0')
 		sc_addline = "";
 	else
