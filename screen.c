@@ -72,10 +72,6 @@ extern int fd0;
 #include <sys/ptem.h>
 #endif
 
-#ifdef __KLIBC__
-#include "pckeys.h"
-#endif
-
 #endif /* MSDOS_COMPILER */
 
 /*
@@ -796,9 +792,6 @@ scrsize()
 #endif
 #endif
 #endif
-#ifdef __KLIBC__
-	windowid = NULL;
-#endif
 
 	if (sys_height > 0)
 		sc_height = sys_height;
@@ -891,7 +884,7 @@ special_key_str(key)
 {
 	static char tbuf[40];
 	char *s;
-#if MSDOS_COMPILER || OS2 || defined(__KLIBC__)
+#if MSDOS_COMPILER || OS2
 	static char k_right[]		= { '\340', PCK_RIGHT, 0 };
 	static char k_left[]		= { '\340', PCK_LEFT, 0  };
 	static char k_ctl_right[]	= { '\340', PCK_CTL_RIGHT, 0  };
@@ -915,7 +908,7 @@ special_key_str(key)
 
 	switch (key)
 	{
-#if OS2 || defined(__KLIBC__)
+#if OS2
 	/*
 	 * If windowid is not NULL, assume less is executed in 
 	 * the XFree86 environment.
@@ -987,7 +980,7 @@ special_key_str(key)
 		s = k_delete;
 		break;
 #endif
-#if MSDOS_COMPILER || OS2 || defined(__KLIBC__)
+#if MSDOS_COMPILER || OS2
 	case SK_INSERT:
 		s = k_insert;
 		break;

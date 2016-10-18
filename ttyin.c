@@ -120,9 +120,18 @@ getchr()
 		if (c == '\003')
 			return (READ_INTR);
 #else
+#ifdef __KLIBC__
+#include <conio.h>
+		flush();
+		c = getch();
+		result = 1;
+		if (c == '\003')
+			return (READ_INTR);
+#else
 		result = iread(tty, &c, sizeof(char));
 		if (result == READ_INTR)
 			return (READ_INTR);
+#endif
 		if (result < 0)
 		{
 			/*
