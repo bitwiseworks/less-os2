@@ -352,7 +352,7 @@ set_charset()
 	 * rather than from predefined charset entry.
 	 */
 	ilocale();
-#if MSDOS_COMPILER
+#if MSDOS_COMPILER || defined(__KLIBC__)
 	/*
 	 * Default to "dos".
 	 */
