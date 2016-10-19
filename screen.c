@@ -61,7 +61,7 @@ extern int fd0;
 #ifdef _OSK
 #include <signal.h>
 #endif
-#if OS2
+#if OS2 || defined(__KLIBC__)
 #include <sys/signal.h>
 #include "pckeys.h"
 #endif
@@ -792,7 +792,9 @@ scrsize()
 #endif
 #endif
 #endif
-
+#ifdef __KLIBC__
+	windowid = NULL;
+#endif
 	if (sys_height > 0)
 		sc_height = sys_height;
 	else if ((s = lgetenv("LINES")) != NULL)
@@ -884,7 +886,7 @@ special_key_str(key)
 {
 	static char tbuf[40];
 	char *s;
-#if MSDOS_COMPILER || OS2
+#if MSDOS_COMPILER || OS2 || defined(__KLIBC__)
 	static char k_right[]		= { '\340', PCK_RIGHT, 0 };
 	static char k_left[]		= { '\340', PCK_LEFT, 0  };
 	static char k_ctl_right[]	= { '\340', PCK_CTL_RIGHT, 0  };
@@ -908,7 +910,7 @@ special_key_str(key)
 
 	switch (key)
 	{
-#if OS2
+#if OS2 || defined(__KLIBC__)
 	/*
 	 * If windowid is not NULL, assume less is executed in 
 	 * the XFree86 environment.
@@ -980,7 +982,7 @@ special_key_str(key)
 		s = k_delete;
 		break;
 #endif
-#if MSDOS_COMPILER || OS2
+#if MSDOS_COMPILER || OS2 || defined(__KLIBC__)
 	case SK_INSERT:
 		s = k_insert;
 		break;
