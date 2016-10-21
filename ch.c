@@ -30,6 +30,9 @@ typedef POSITION BLOCKNUM;
 
 public int ignore_eoi;
 
+#ifdef __KLIBC__
+extern int fd0;
+#endif
 /*
  * Pool of buffers holding the most recently used blocks of the input file.
  * The buffer pool is kept as a doubly-linked circular list,
@@ -898,6 +901,18 @@ ch_close()
 	if (thisfile == NULL)
 		return;
 
+#ifdef __KLIBC__ // eat the complete buffer to ignore a sys1805
+	if(ch_file == fd0);
+	{
+		char *buf[1024];
+		int buflen = 1023;
+		int n = 0;
+		do
+		{
+			n = iread(ch_file, buf, buflen);
+		} while (n>0);
+	}
+#endif
 	if (ch_flags & (CH_CANSEEK|CH_POPENED|CH_HELPFILE))
 	{
 		/*
