@@ -126,7 +126,10 @@ getchr()
 		c = getch();
 		result = 1;
 		if (c == '\003')
+		{
+			sigs |= S_INTERRUPT;
 			return (READ_INTR);
+		}
 #else
 		result = iread(tty, &c, sizeof(char));
 		if (result == READ_INTR)

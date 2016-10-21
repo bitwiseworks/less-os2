@@ -257,7 +257,11 @@ static struct loption option[] =
 	},
 #endif
 	{ 'K', &K__optname,
+#ifdef __KLIBC__ //ctrl-c should always end
+		BOOL, OPT_ON, &quit_on_intr, NULL,
+#else
 		BOOL, OPT_OFF, &quit_on_intr, NULL,
+#endif
 		{
 			"Interrupt (ctrl-C) returns to prompt",
 			"Interrupt (ctrl-C) exits less",
