@@ -40,7 +40,7 @@
 #include <sys/utsname.h>
 #endif
 
-#if HAVE_POLL && !MSDOS_COMPILER
+#if HAVE_POLL && !MSDOS_COMPILER && !defined(__KLIBC__)
 #define USE_POLL 1
 static lbool use_poll = TRUE;
 #else
