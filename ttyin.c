@@ -71,7 +71,7 @@ public int open_tty(void)
 	if (is_lesstest())
 		fd = open_tty_device(ttyin_name);
 #endif /*LESSTEST*/
-#if HAVE_TTYNAME
+#if HAVE_TTYNAME && !defined(__KLIBC__)
 	if (fd < 0)
 	{
 		constant char *dev = ttyname(2);
